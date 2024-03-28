@@ -1,0 +1,28 @@
+body{
+    /* 讓高度出現 */
+    min-height: 100svh;
+    background-image: url(../images/bg.jpg);
+    background-size: cover;
+}
+.row {
+    display: flex;
+    width: 180px;
+    background-color: lightblue;
+
+    &:nth-child(odd) {
+        background-color: rgb(221, 243, 24);
+    }
+
+    .col {
+        width: 60px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        user-select: none;
+        cursor: pointer;
+
+        &.active {
+            background-color: #12e20b;
+        }
+    }
+}
