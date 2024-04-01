@@ -1,0 +1,11 @@
+body {
+  min-width: 100svh;
+  padding: 0;
+  margin: 0;
+}
+body .row {
+  display: flex;
+  width: 180px;
+}
+
+/*# sourceMappingURL=aa.css.map */

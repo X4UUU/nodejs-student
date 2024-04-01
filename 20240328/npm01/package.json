@@ -1,0 +1,23 @@
+{
+  "name": "npm01",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js",
+    "sass": "sass --watch sass/:css/",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "jquery": "^1.11.2",
+    "uniq": "^1.0.1"
+  },
+  "devDependencies": {
+    "sass": "^1.72.0"
+  }
+}

@@ -1,0 +1,16 @@
+body {
+  min-width: 100svh;
+  padding: 0;
+  margin: 0;
+}
+body .row {
+  display: flex;
+  width: 11.25rem;
+}
+body .row .col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*# sourceMappingURL=index.css.map */
