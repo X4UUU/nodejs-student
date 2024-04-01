@@ -2,8 +2,12 @@ import express from "express";
 import { readFile } from "fs/promises";
 import { resolve } from "path";
 const __dirname = import.meta.dirname;
-const app = express();
 let user;
+// 做路由宣告
+const bp = express.urlencoded({ extended: false });
+
+const app = express();
+
 app.use("/bs", express.static(resolve(__dirname, "node_modules/bootstrap/dist")));
 
 app.set("view engine", "ejs");
@@ -25,19 +29,20 @@ app.get("/test2", (req, res) => {
 })
 
 app.get("/test3", (req, res) => {
-    // user = {
-    //     name: "April Gray",
-    //     img: "https://randomuser.me/api/portraits/women/69.jpg"
-    // };
     res.render("test3", { user });
 })
 
-app.get("/login", (req, res) => {
-    user = {
-        name: "April Gray",
-        img: "https://randomuser.me/api/portraits/women/69.jpg"
-    };
-    res.redirect("/test3");
+app.post("/login", (req, res) => {
+    const { account, password } = req.body;
+    if (account === "ben" && password === "a12345") {
+        user = {
+            name: "April Gray",
+            img: "https://randomuser.me/api/portraits/women/69.jpg"
+        };
+        res.redirect("/test3");
+    } else {
+        res.redirect("/test3");
+    }
 });
 
 app.get("/logout", (req, res) => {
