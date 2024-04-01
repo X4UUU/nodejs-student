@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/bs/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1></h1>
+    <% if(user){ %>
+        <img class="rounded-circle align-bottom" src="<%=user.img%>"><span class="align-bottom fs-3 me-1"><%=user.name%></span>
+        <button class="align-bottom btn border border-danger text-danger btn-sm">登出</button>
+    <% }else{ %>
+        <button class="btn border border-primary text-primary me-1">登入</button>
+        <button class="btn border border-success text-success">註冊</button>
+    <% } %>
+    <script src="./js/bootstrap.bundle.js"></script>
+</body>
+</html>
