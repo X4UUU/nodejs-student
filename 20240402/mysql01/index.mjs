@@ -6,8 +6,24 @@ const app = express();
 app.get("/", (req, res) => {
     res.send("網站首頁");
 })
-app.get("/dd/:id", (req, res) => {
+app.get("/dd/:id", async (req, res) => {
+    let sql = "SELECT *  FROM `sort` WHERE `id` = ?";
+    let dataAry = [req.params.id];
     // 用promise方式寫
+    let data = await getData(sql, dataAry).then(results => {
+        if (results.length === 0) {
+            return undefined;
+        } else {
+            const { isvalid, ...others } = results[0];
+            return others;
+        }
+    }).catch(err => undefined);
+    console.log(data);
+    if (data) {
+        res.json(data)
+    } else {
+        res.json({ err: "查無此資料" })
+    }
 });
 
 app.get("/d/:id", (req, res) => {
@@ -15,31 +31,30 @@ app.get("/d/:id", (req, res) => {
 
 });
 
-
-
-
-
-
-
-
 app.listen(3000, () => {
     console.log("running at http://localhost:3000");
 })
 
-function getData(id) {
+function getData(sql, dataAry) {
     return new Promise((resolve, reject) => {
         conn.execute(
-            "SELECT *  FROM `sort` WHERE `id` = ?",
-            [id],
+            sql,
+            dataAry,
             (err, results) => {
                 if (err) {
                     return reject(err);
                 }
+                return resolve(results);
+                // if (results.length !== 0) {
+                //     const { isvalid, ...data } = results[0];
+                //     return resolve(data);
+                // } else {
+                //     return resolve(undefined);
+                // }
                 // let data = results.map(item => {
                 //     return {id: item.id, name: item.name}
                 // });
-                const { isvalid, ...data } = results[0];
-                return resolve(data);
+
             }
         );
     });
