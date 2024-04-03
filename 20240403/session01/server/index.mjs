@@ -39,6 +39,8 @@ const sessionOptions = {
 };
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 app.use(cors(corsOptions));
 app.use(session(sessionOptions));
 
@@ -49,13 +51,28 @@ app.get("/", (req, res) => {
 app.post("/login", upload.none(), (req, res) => {
     const { account, password } = req.body;
     if (users[account] && users[account].password === password) {
-        const {password,...user} = users[account];
+        const { password, ...user } = users[account];
         req.session.user = user;
-        res.json({ message: "歡迎光臨" ,user});
-    }else{
-        res.json({ message: "拒絕存取"});
+        res.json({ message: "歡迎光臨", user });
+    } else {
+        res.json({ message: "拒絕存取" });
     }
-    
+
+});
+
+app.get("/checkLogin", (req, res) => {
+    const { user } = req.session;
+    if (user) {
+        res.json({ message: "歡迎再度光臨", user });
+    } else {
+        res.json({ message: "拒絕存取" });
+    }
+});
+
+app.get("/logout",(req,res)=>{
+    console.log("logout");
+    delete req.session.user;
+    res.json({message: "謝謝光臨"});
 });
 
 app.listen(3000, () => {
