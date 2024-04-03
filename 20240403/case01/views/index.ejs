@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="/fontawesome/css/all.min.css">
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
-
 <body>
   <div class="container-md mt-1">
     <div class="input-group input-group-lg">
@@ -30,15 +29,38 @@
       <div class="btn btn-primary btn-sm fs-6 sort">分類</div>
       <div class="btn btn-primary btn-sm fs-6 money text-end pe-2">金額</div>
     </div>
-    <div class="unit fs-6">
-      <div class="sn ps-2">#</div>
-      <div class="title">TITLE</div>
-      <div class="sort">SORT</div>
-      <div class="money text-end pe-2">999</div>
+    <div class="lists">
+      <%
+        let totalMoney=0;
+        data.forEach((item, index)=>{
+          totalMoney += item.money;
+          let sortName = sort.find(st => st.id === item.sort).name;
+        %>
+        <div 
+          class="unit fs-6 list" 
+          title="<%=item.title%>"
+          money="<%=item.money%>"
+          id="<%=item.id%>"
+          sort="<%=item.sort%>">
+          <div class="sn ps-2">
+            <%=index+1%>
+          </div>
+          <div class="title">
+            <%=item.title%>
+          </div>
+          <div class="sort">
+            <%=sortName%>
+          </div>
+          <div class="money text-end pe-2">
+            <%=item.money%>
+          </div>
+        </div>
+        <% }); %>
     </div>
+
     <div class="bg-primary mt-2 text-white rounded-bottom">
       <div class="text-end pe-2 text-white fs-3">
-        8888
+        <%=totalMoney%>
       </div>
     </div>
   </div>
@@ -58,9 +80,11 @@
           <span class="input-group-text">消費分類</span>
           <select name="sort" class="form-select">
             <option value selected disabled>請選擇</option>
-            <% sort.forEach(item => { %>
-            <option value="<%=item.id%>"><%=item.name%></option>
-            <% }) %>
+            <% sort.forEach(item=> { %>
+              <option value="<%=item.id%>">
+                <%=item.name%>
+              </option>
+              <% }) %>
           </select>
         </div>
         <input type="hidden" name="date" value="<%=date%>">

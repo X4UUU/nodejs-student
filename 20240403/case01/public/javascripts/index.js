@@ -7,6 +7,9 @@ const newSet = document.querySelector(".newSet");
 const updateSet = document.querySelector(".updateSet");
 const btnSend = document.querySelector(".btn-send");
 const form1 = document.querySelector("form");
+const lists = document.querySelector(".lists");
+const btnUpdate = document.querySelector(".btn-update");
+const btnDel = document.querySelector(".btn-del");
 
 myDate.addEventListener("change", e => {
     const date = e.currentTarget.value;
@@ -43,4 +46,50 @@ btnAddShow.addEventListener("click", e => {
 
 btnSend.addEventListener("click", () => {
     form1.submit();
+});
+
+lists.addEventListener("click", e => {
+    const clip = e.target.closest(".list");
+    document.querySelector("input[name=title]").value = clip.getAttribute("title");
+    document.querySelector("input[name=money]").value = clip.getAttribute("money");
+    document.querySelector("input[name=id]").value = clip.getAttribute("id");
+    document.querySelector("select").selectedIndex = clip.getAttribute("sort");
+
+    updateSet.classList.add("d-flex");
+    updateSet.classList.remove("d-none");
+
+    newSet.classList.add("d-none");
+    newSet.classList.remove("d-flex");
+
+    bsOffcanvas.show();
+})
+
+btnUpdate.addEventListener("click", () => {
+    const url = "/expe";
+    const formDate = new FormData(form1);
+
+    fetch(url, {
+        method: "PUT",
+        body: formDate
+    }).then(response => response.json()).then(result => {
+        if (result.result) {
+            window.location.href = "/expe/d/" + myDate.value;
+        } else {
+            alert("修改錯誤")
+        }
+    }).catch(error => {
+        console.log(error);
+    })
+    fetch(url, {
+        method: "DELETE",
+        body: formDate
+    }).then(response => response.json()).then(result => {
+        if (result.result) {
+            window.location.href = "/expe/d/" + myDate.value;
+        } else {
+            alert("刪除錯誤")
+        }
+    }).catch(error => {
+        console.log(error);
+    })
 })

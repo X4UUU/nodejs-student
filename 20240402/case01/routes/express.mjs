@@ -21,8 +21,27 @@ router.get("/d/:date", async (req, res) => {
     res.render("index", { date, sort })
 });
 
-router.post("/", (req, res) => {
-    res.send("新增指定日期的消費")
+router.post("/", async (req, res) => {
+    let title = req.body.title;
+    let money = parseInt(req.body.money);
+    let sort = parseInt(req.body.sort);
+    let date = req.body.date;
+    let result = await conn.execute(
+        "INSERT INTO `expense` (`id`, `title`, `sort`, `money`, `date`) VALUES (NULL, ?, ?, ?, ?);",
+        [title, sort, money, date],
+    ).then(results => {
+        if(results[0].insertId){
+            return true;
+        }else{
+            return false;
+        }
+    }).catch(error => false);
+    console.log(result);
+    if (result) {
+        res.redirect("/expe/d/"+date);
+    }else{
+        res.send("新增錯誤，請洽管理人員")
+    }
 });
 
 router.put("/", (req, res) => {
