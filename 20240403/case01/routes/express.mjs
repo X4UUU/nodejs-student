@@ -1,4 +1,4 @@
-import express, { response } from "express";
+import express from "express";
 import moment from "moment";
 import multer from "multer";
 import conn from "../db2.mjs";
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
         "INSERT INTO `expense` (`id`, `title`, `sort`, `money`, `date`) VALUES (NULL, ?, ?, ?, ?);",
         [title, sort, money, date],
     ).then(results => {
-        if (results[0].insertId) {
+        if (results[0].insertId > 0) {
             return true;
         } else {
             return false;
