@@ -1,11 +1,14 @@
 import mysql from "mysql2/promise";
+import dotenv from "dotenv";
+dotenv.config();
+
 // createPool好處是連線更為彈性,對於多人專案開發較有效率
 const conn = await mysql.createPool({
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "",
-    database: "nodejsdb",
+    host: process.env.HOST,
+    port: process.env.PORT,
+    user: process.env.USERNAME,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
     waitForConnections: true,
     connectionLimit: 5,
     queueLimit: 0
